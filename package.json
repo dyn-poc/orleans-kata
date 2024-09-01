@@ -1,0 +1,25 @@
+{
+  "name": "@nxo/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "packageManager": "pnpm",
+  "scripts": {
+    "prepare": "nx g @nx-dotnet/core:restore",
+    "build": "nx run-many -t build --exclude @nxo/source",
+    "test": "nx run-many -t test --exclude @nxo/source",
+    "lint": "nx run-many -t lint --exclude @nxo/source",
+    "codegen": "nx run-many -t codegen --exclude @nxo/source",
+    "start": "nx run-many -t serve -p api",
+    "dotnet:add": "nx g @nx-dotnet/core:nuget-reference ",
+    "doc": "nx run-many -t doc --exclude @nxo/source"
+  },
+  "private": true,
+  "devDependencies": {
+    "@nx-dotnet/core": "^2.2.0",
+    "@nx-dotnet/nxdoc": "^2.2.0",
+    "@nx/plugin": "^17.1.2",
+    "@nx/workspace": "17.1.2",
+    "@nx/devkit": "^17.1.2",
+    "nx": "17.1.2"
+  }
+}

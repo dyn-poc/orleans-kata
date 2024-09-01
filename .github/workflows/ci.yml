@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+      - docs
+  pull_request:
+
+# Needed for nx-set-shas within nx-cloud-main.yml, when run on the main branch
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
+     
+      # This line enables distribution
+      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "e2e-ci" targets have been requested
+      # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+      - run: pnpm i
+      - run: pnpm build
+      - run: pnpm test
+
